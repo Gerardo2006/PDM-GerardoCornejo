@@ -97,7 +97,6 @@ fun ListaNombresApp(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxSize(),
             horizontalAlignment = Alignment.Start
-                .color(Color.Black)
         ) {
             itemsIndexed(nombres) { index, nombre ->
                 Row(
