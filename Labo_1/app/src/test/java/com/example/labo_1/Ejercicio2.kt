@@ -10,8 +10,8 @@ data class Calculadora (
     fun suma(a: Int, b: Int): Int = a + b
     fun resta(a: Int, b: Int): Int = a - b
     fun multiplicacion(a: Int, b: Int): Int = a * b
-    fun division(a: Int, b: Int): Int {
-        return if (b != 0) a / b else 0
+    fun division(a: Double, b: Double): Double {
+        return (if (b != 0.0) a / b else 0.0)
     }
 }
 
@@ -29,7 +29,7 @@ class Ejercicio2 {
         println("Multiplicacion: ")
         println(miCalc.multiplicacion(10, 5))
         println("Division: ")
-        println(miCalc.division(10, 5))
+        println(miCalc.division(3.0, 2.0))
 
     }
 }
