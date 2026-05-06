@@ -102,10 +102,3 @@ fun Lista(navController: NavController, modifier: Modifier = Modifier) {
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun ListaPreview() {
-    val navController = rememberNavController()
-    Lista(navController = navController)
-}

@@ -76,29 +76,28 @@ fun UseSensorScreen(navController: NavController) {
 
 @Composable
 fun useSensor(sensorType: Int): List<Float> {
-    val context = LocalContext.current
-    val sensorManager = remember { context.getSystemService(Context.SENSOR_SERVICE) as SensorManager }
-    val sensor = sensorManager.getDefaultSensor(sensorType)
-    var sensorValues by remember { mutableStateOf(emptyList<Float>()) }
+  val context = LocalContext.current
+  val sensorManager = remember { context.getSystemService(Context.SENSOR_SERVICE) as SensorManager }
+  val sensor = sensorManager.getDefaultSensor(sensorType) ?: return emptyList()
+  var sensorValues by remember { mutableStateOf(listOf(0f, 0f, 0f)) }
 
-    if (sensor == null) return emptyList()
-
-    DisposableEffect(sensorType) {
-        val listener = object : SensorEventListener {
-            override fun onSensorChanged(event: SensorEvent?) {
-                event?.values?.let {
-                    sensorValues = it.toList()
-                }
-            }
-            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+  DisposableEffect(sensorType) {
+    val listener = object : SensorEventListener {
+      override fun onSensorChanged(event: SensorEvent?) {
+        event?.values?.let {
+          sensorValues = it.toList()
         }
+      }
 
-        sensorManager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_UI)
-
-        onDispose {
-            sensorManager.unregisterListener(listener)
-        }
+      override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
     }
 
-    return sensorValues
+    sensorManager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_UI)
+
+    onDispose {
+      sensorManager.unregisterListener(listener)
+    }
+  }
+
+  return sensorValues
 }

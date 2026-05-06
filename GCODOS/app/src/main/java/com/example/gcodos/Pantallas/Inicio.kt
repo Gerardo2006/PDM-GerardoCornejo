@@ -69,10 +69,3 @@ fun Inicio(navController: NavController) {
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun InicioPreview() {
-    val navController = rememberNavController()
-    Inicio(navController = navController)
-}
