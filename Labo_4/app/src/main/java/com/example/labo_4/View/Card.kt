@@ -13,8 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.labo_4.Model.Task
-
+import com.example.labo_4.Model.Entities.Task
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 @Composable
@@ -22,6 +24,10 @@ fun TaskCard(
     task: Task,
     modifier: Modifier = Modifier
 ) {
+    val formateador = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+    val fechaLegible = formateador.format(Date(task.endDate))
+
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -46,7 +52,7 @@ fun TaskCard(
             }
 
             Text(
-                text = "Fecha: " + task.endDate.toString()
+                text = "Fecha: $fechaLegible"
             )
         }
     }

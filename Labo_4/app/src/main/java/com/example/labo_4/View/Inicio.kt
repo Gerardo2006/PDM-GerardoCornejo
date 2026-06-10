@@ -22,10 +22,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.labo_4.ViewModel.GeneralViewModel
+import com.example.labo_4.ViewModel.TaskViewModel
 
 @Composable
-fun Inicio(navController: NavHostController, viewModel: GeneralViewModel) {
+fun Inicio(navController: NavHostController, viewModel: TaskViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,15 +54,4 @@ fun Inicio(navController: NavHostController, viewModel: GeneralViewModel) {
             Text(text = "Comenzar")
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun InicioPreview() {
-    val mockViewModel: GeneralViewModel = viewModel()
-    val mockNavController = androidx.navigation.compose.rememberNavController()
-    Inicio(
-        navController = mockNavController,
-        viewModel = mockViewModel
-    )
 }

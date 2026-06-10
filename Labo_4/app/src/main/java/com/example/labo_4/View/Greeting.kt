@@ -15,16 +15,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.labo_4.Model.Task
-import com.example.labo_4.ViewModel.GeneralViewModel
+import com.example.labo_4.Model.Entities.Task
+import com.example.labo_4.ViewModel.TaskViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Greeting(navController: NavHostController, viewModel: GeneralViewModel) {
+fun Greeting(navController: NavHostController, viewModel: TaskViewModel) {
     var showDialog by remember { mutableStateOf(false) }
-    val taskList = remember { mutableStateListOf<Task>() }
+    val taskList by viewModel.tasks.collectAsStateWithLifecycle(initialValue = emptyList())
 
     Scaffold(
         topBar = {
@@ -48,11 +49,10 @@ fun Greeting(navController: NavHostController, viewModel: GeneralViewModel) {
                 onDismiss = { showDialog = false },
                 onTaskCreated = { newTitle, newDescription ->
                     val newTask = Task(
-                        id = taskList.size + 1,
                         title = newTitle,
                         description = newDescription
                     )
-                    taskList.add(newTask)
+                    viewModel.addTask(newTask)
                     showDialog = false
                 }
             )
@@ -79,7 +79,7 @@ fun CreateTask(
         Column(
             modifier = Modifier
                 .wrapContentSize()
-                .background(Color.White) // Cambiado a Blanco para visibilidad, o usa MaterialTheme.colorScheme.surface
+                .background(Color.White)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -130,15 +130,4 @@ fun CreateTask(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun GreetingPreview() {
-    val mockViewModel: GeneralViewModel = viewModel()
-    val mockNavController = androidx.navigation.compose.rememberNavController()
-    Greeting(
-        navController = mockNavController,
-        viewModel = mockViewModel
-    )
 }
